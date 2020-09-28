@@ -8,7 +8,9 @@ with req.urlopen(url)as resp:
       dirs = resp.read().decode('utf-8').split()
       for i in range(8, len(dirs), 9):
           prefix = dirs[i][:4:]
-          source = url + dirs[i] + "/" + prefix + target_path
-          dest = dest_path + prefix[0] + "/" + prefix + target_path
-          req.urlretrieve(source, dest)
-
+          if prefix != "LHLE": # file LHLE could not be installed (505 error)
+              source = url + dirs[i] + "/" + prefix + target_path
+              dest = dest_path + prefix[0] + "/" + prefix + target_path
+              req.urlretrieve(source, dest)
+              print("File: "+prefix + target_path + " is downloaded!")
+print("Done!")
